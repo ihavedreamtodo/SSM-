@@ -16,7 +16,7 @@
 	
     <!-- 字符串字符编码转换 -->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
-        <property name="messageConverters">   
+        <property name="messageConverters">   <!-- //消息转换 -->
 	         <list>
 	             <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">   
 	                <property name="supportedMediaTypes">

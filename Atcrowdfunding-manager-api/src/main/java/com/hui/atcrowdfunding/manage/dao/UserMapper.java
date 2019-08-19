@@ -97,4 +97,9 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 	User queryUserLogin(Map<String, Object> paramMap);
+
+	List<User> queryList(@Param("startIndex") Integer startIndex, 
+			@Param("pagesize") Integer pagesize);
+
+	Integer queryCount();
 }
