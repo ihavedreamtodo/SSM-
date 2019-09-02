@@ -93,4 +93,6 @@ public interface PermissionMapper {
      * @mbg.generated Sat Aug 17 10:59:59 CST 2019
      */
     int updateByPrimaryKey(Permission record);
+
+	List<Permission> queryAllPermission();
 }

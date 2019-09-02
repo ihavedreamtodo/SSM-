@@ -58,7 +58,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
+				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 角色列表</h3>
 			  </div>
 			  <div class="panel-body">
 <form class="form-inline" role="form" style="float:left;">
@@ -71,7 +71,7 @@
   <button id="queryBtn" type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
 <button id="deleteBatch" type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APP_PATH }/user/toAdd.htm'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APP_PATH }/role/toAdd.htm'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -80,9 +80,9 @@
                 <tr >
                   <th width="30">#</th>
 				  <th width="30"><input id="allCheckbox" type="checkbox"></th>
-                  <th>账号</th>
+                   
                   <th>名称</th>
-                  <th>邮箱地址</th>
+                  
                   <th width="100">操作</th>
                 </tr>
               </thead>
@@ -125,7 +125,7 @@
 						}
 					}
 				});
-			    queryPageUser(1);
+			    queryPageRole(1);
             });
             $("tbody .btn-success").click(function(){
                 window.location.href = "assignRole.html";
@@ -138,23 +138,23 @@
             
             function pageChange(pageno){
             	//window.location.href="${APP_PATH}/user/index.do?pageno="+pageno ;
-            	queryPageUser(pageno);
+            	queryPageRole(pageno);
             }
             
             
             var jsonObj = {
         			"pageno" : 1,
-        			"pagesize" : 10 
+        			"pagesize" : 5
         		};
             
             
             var loadingIndex = -1 ;
-            function queryPageUser(pageno){
+            function queryPageRole(pageno){
             	jsonObj.pageno = pageno ;
             	$.ajax({
             		type : "POST",
             		data : jsonObj,
-            		url : "${APP_PATH}/user/user.do",
+            		url : "${APP_PATH}/role/role.do",
             		beforeSend : function(){
             			loadingIndex = layer.load(2, {time: 10*1000});
             			return true ;
@@ -171,13 +171,13 @@
             					content+='<tr>';
                 				content+='  <td>'+(i+1)+'</td>';
                 				content+='  <td><input type="checkbox" id="'+n.id+'""></td>';
-                				content+='  <td>'+n.loginacct+'</td>';
-                				content+='  <td>'+n.username+'</td>';
-                				content+='  <td>'+n.email+'</td>';
+                			 
+                				content+='  <td>'+n.name+'</td>';
+                				 
                 				content+='  <td>';
                 				content+='	  <button type="button"onclick="window.location.href=\'${APP_PATH}/user/assingnrole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
                 				content+='	  <button type="button" onclick="window.location.href=\'${APP_PATH}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
-                				content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.username+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
+                				content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.name+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                 				content+='  </td>';
                 				content+='</tr>';
             				});
@@ -224,7 +224,7 @@
             $("#queryBtn").click(function(){
             	var queryText = $("#queryText").val();
             	jsonObj.queryText = queryText ;
-            	queryPageUser(1);
+            	queryPageRole(1);
             });
             
             function deleteUser(id,username){

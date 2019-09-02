@@ -236,4 +236,27 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  
+  <select id="queryList" resultMap="BaseResultMap">
+  
+  select id,name
+    from t_role
+    <where><!-- 数据库拼接字符串的方法 -->
+    	<if test="queryText!=null">
+    		name like concat("%",#{queryText},"%") 
+    	</if>
+    </where>
+      
+    limit #{startIndex} , #{pagesize}
+  </select>
+  
+    <select id="queryCount" resultType="Integer">
+  
+  select count(*)
+    from t_role
+    
+  </select>
+  
 </mapper>

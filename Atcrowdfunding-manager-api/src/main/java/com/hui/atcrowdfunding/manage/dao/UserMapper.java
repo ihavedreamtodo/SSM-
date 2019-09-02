@@ -1,7 +1,10 @@
 package com.hui.atcrowdfunding.manage.dao;
 
+import com.hui.atcrowdfunding.bean.Role;
 import com.hui.atcrowdfunding.bean.User;
 import com.hui.atcrowdfunding.bean.UserExample;
+import com.hui.atcrowdfunding.vo.Data;
+
 import java.util.List;
 import java.util.Map;
 
@@ -98,8 +101,21 @@ public interface UserMapper {
 
 	User queryUserLogin(Map<String, Object> paramMap);
 
-	List<User> queryList(@Param("startIndex") Integer startIndex, 
+	/*List<User> queryList(@Param("startIndex") Integer startIndex, 
 			@Param("pagesize") Integer pagesize);
-
+*/
 	Integer queryCount();
+
+	List<User> queryList(Map<String, Object> paramMap);
+
+	int deleteBatchUserByVO(List<User> list);
+
+	List<Role> queryAllRole();
+
+	List<Role> queryRoleById(Integer id);
+	/*在map里面，若是传入多个参数，则需用@Param("userid") 用来指明*/
+	int saveUserRoleRelationship(@Param("userid") Integer userid, @Param("data") Data data);
+
+	int deleteUserRoleRelationship(@Param("userid") Integer userid, @Param("data") Data data);
+
 }

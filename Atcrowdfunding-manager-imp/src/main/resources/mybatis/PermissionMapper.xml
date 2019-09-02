@@ -283,4 +283,10 @@
       url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="queryAllPermission" resultMap="BaseResultMap">
+    select id, pid, name, icon, url
+		from t_permission
+  </select>
 </mapper>
