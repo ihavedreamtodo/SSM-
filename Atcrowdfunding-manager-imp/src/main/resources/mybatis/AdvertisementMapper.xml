@@ -298,4 +298,36 @@
       userid = #{userid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  
+  <select id="queryCount" resultType="int">
+  
+  select count(*)
+    from t_advertisement
+    
+  </select>
+  
+<select id="queryList" resultMap="BaseResultMap">
+  
+  select id,name,iconpath,
+  status,url,userid
+    from t_advertisement
+    <where><!-- 数据库拼接字符串的方法 -->
+    	<if test="queryText!=null">
+    		name like concat("%",#{queryText},"%") 
+    	</if>
+    </where>
+     <!-- order by createtime desc -->
+    limit #{startIndex} , #{pagesize}
+  </select>
+  
+  <insert id="insertAdvert">
+        insert into t_advertisement (
+            name,iconpath,status,url,userid
+        ) values (
+            #{name},#{iconpath},#{status},#{url},#{userid}
+        )
+    </insert>
+    
 </mapper>

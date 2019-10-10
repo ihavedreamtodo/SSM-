@@ -1,5 +1,6 @@
 package com.hui.atcrowdfunding.manage.dao;
 
+import com.hui.atcrowdfunding.bean.Permission;
 import com.hui.atcrowdfunding.bean.Role;
 import com.hui.atcrowdfunding.bean.User;
 import com.hui.atcrowdfunding.bean.UserExample;
@@ -117,5 +118,7 @@ public interface UserMapper {
 	int saveUserRoleRelationship(@Param("userid") Integer userid, @Param("data") Data data);
 
 	int deleteUserRoleRelationship(@Param("userid") Integer userid, @Param("data") Data data);
+
+	List<Permission> queryPermissionByUserid(Integer id);
 
 }

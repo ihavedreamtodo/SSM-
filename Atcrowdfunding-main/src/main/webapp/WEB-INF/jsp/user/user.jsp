@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="${APP_PATH }/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${APP_PATH }/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${APP_PATH }/css/main.css">
+	<link rel="stylesheet" href="${APP_PATH }/css/pagination.css" />
 	<style>
 	.tree li {
         list-style-type: none;
@@ -93,9 +94,7 @@
 		
 			     <tr >
 				     <td colspan="6" align="center">
-						<ul class="pagination">
-							
-							 </ul>
+						<div id="Pagination" class="pagination"><!-- 这里显示分页 --></div>
 					 </td>
 				 </tr>
 
@@ -111,6 +110,7 @@
     <script src="${APP_PATH }/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APP_PATH }/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APP_PATH }/script/docs.min.js"></script>
+	<script src="${APP_PATH }/jquery/pagination/jquery.pagination.js"></script>
 	
 	<script type="text/javascript" src="${APP_PATH }/jquery/layer/layer.js"></script>
         <script type="text/javascript">
@@ -125,7 +125,7 @@
 						}
 					}
 				});
-			    queryPageUser(1);
+			    queryPageUser(0);
             });
             $("tbody .btn-success").click(function(){
                 window.location.href = "assignRole.html";
@@ -149,8 +149,8 @@
             
             
             var loadingIndex = -1 ;
-            function queryPageUser(pageno){
-            	jsonObj.pageno = pageno ;
+            function queryPageUser(pageIndex){
+            	jsonObj.pageno = pageIndex+1 ;
             	$.ajax({
             		type : "POST",
             		data : jsonObj,
@@ -185,7 +185,7 @@
             				
             				$("tbody").html(content);
             				
-            				var contentBar = '';
+            				/* var contentBar = '';
             				
             				if(page.pageno==1 ){
             					contentBar+='<li class="disabled"><a href="#">上一页</a></li>';
@@ -208,6 +208,18 @@
             				}
             				
             				$(".pagination").html(contentBar);
+            				*/
+            		 
+            				// 创建分页
+            				$("#Pagination").pagination(page.totalno,{
+            					num_edge_entries: 1, //边缘页数
+            					num_display_entries: 4, //主体页数
+            					callback: queryPageUser,
+            					items_per_page:1 ,//每页显示1项
+            					current_page:(page.pageno-1),
+            					prev_text:"上一页",
+            					next_text:"下一页"
+            				});
             				
             			}else{
             				layer.msg(result.message, {time:1000, icon:5, shift:6});
@@ -215,8 +227,9 @@
             		},
             		error : function(){
             			layer.msg("加载数据失败!", {time:1000, icon:5, shift:6});
-            		}
-            	});
+            		} 
+            		
+            		});
             }
             
             

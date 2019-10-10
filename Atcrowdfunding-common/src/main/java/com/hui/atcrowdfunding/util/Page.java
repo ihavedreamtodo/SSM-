@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Page {
 
-	private List datas;
-	private Integer pageno;
-	private Integer pagesize;
-	private Integer totalno;
-	private Integer totalsize;
+	private List datas;//数据
+	private Integer pageno;//当前页面、码
+	private Integer pagesize;//一页有多少数据
+	private Integer totalno;//总的页数
+	private Integer totalsize;//
 	
 	
 	public Page(Integer pageno,Integer pagesize) {

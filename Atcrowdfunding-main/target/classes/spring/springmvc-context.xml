@@ -38,17 +38,24 @@
     
     <bean id="exceptionResolver"  
         class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
-        <property name="exceptionMappings">  
-            <props>
+     <!--   <property name="exceptionMappings">  
+             <props>
                 <prop key="java.lang.Exception">error/error</prop>
-                <!-- 若是发生自定义异常怎么办，跳转到指定页面        登录页面-->
+                若是发生自定义异常怎么办，跳转到指定页面        登录页面
                 <prop key="com.hui.atcrowdfunding.exception">login</prop>
             </props>  
-        </property>  
+        </property> -->   
     </bean>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="UTF-8">
         <property name="maxUploadSize" value="2097152"/>
         <property name="resolveLazily" value="true"/>
     </bean>
+    
+    <!-- 声明拦截器 -->
+    <mvc:interceptors>
+    	<bean id="loginInterceptor" class="com.hui.atcrowdfunding.interceptor.LoginInterceptor"></bean>
+    	<bean id="authInterceptor" class="com.hui.atcrowdfunding.interceptor.AuthInterceptor"></bean>
+ </mvc:interceptors>
+    
 </beans>

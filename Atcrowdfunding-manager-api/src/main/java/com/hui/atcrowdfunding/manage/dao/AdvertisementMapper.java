@@ -2,7 +2,11 @@ package com.hui.atcrowdfunding.manage.dao;
 
 import com.hui.atcrowdfunding.bean.Advertisement;
 import com.hui.atcrowdfunding.bean.AdvertisementExample;
+import com.hui.atcrowdfunding.bean.User;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface AdvertisementMapper {
@@ -93,4 +97,8 @@ public interface AdvertisementMapper {
      * @mbg.generated Sat Aug 17 10:59:59 CST 2019
      */
     int updateByPrimaryKey(Advertisement record);
+
+	List<User> queryList(Map paramMap);
+
+	Integer queryCount();
 }

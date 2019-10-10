@@ -42,7 +42,7 @@
 		  </div>
 		  <div class="form-group has-success has-feedback">
 			<select id="ftype" class="form-control" name="type" >
-                <option value="member">会员</option>
+                <option value="member" select>会员</option>
                 <option value="user">管理</option>
             </select>
 		  </div>

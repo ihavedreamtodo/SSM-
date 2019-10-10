@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hui.atcrowdfunding.bean.Permission;
 import com.hui.atcrowdfunding.bean.Role;
 import com.hui.atcrowdfunding.bean.User;
 import com.hui.atcrowdfunding.exception.LoginFailException;
@@ -140,6 +141,11 @@ public class UserServiceImpl implements UserService {
 	public int deleteUserRoleRelationship(Integer userid, Data data) {
 		// TODO Auto-generated method stub
 		return userMapper.deleteUserRoleRelationship(userid,data);
+	}
+
+	public List<Permission> queryPermissionByUserid(Integer id) {
+		// TODO Auto-generated method stub
+		return userMapper.queryPermissionByUserid(id);
 	}
 
  

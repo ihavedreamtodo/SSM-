@@ -23,4 +23,12 @@ public class PermissionServiceImpl implements PermissionService {
 		// TODO Auto-generated method stub
 		return permissionMapper.insert(permission);
 	}
+
+	public List<Integer> queryAllPermissionByRoleId(Integer roleid) {
+		// TODO Auto-generated method stub
+		return permissionMapper.queryAllPermissionByRoleId(roleid);
+	}
+
+ 
+	 
 }

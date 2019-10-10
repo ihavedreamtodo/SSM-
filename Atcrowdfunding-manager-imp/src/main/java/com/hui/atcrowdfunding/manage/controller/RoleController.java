@@ -18,18 +18,43 @@ import com.hui.atcrowdfunding.manage.service.RoleService;
 import com.hui.atcrowdfunding.util.AjaxResult;
 import com.hui.atcrowdfunding.util.Page;
 import com.hui.atcrowdfunding.util.StringUtil;
+import com.hui.atcrowdfunding.vo.Data;
 
 @Controller
 @RequestMapping("/role")
 public class RoleController {
 	@Autowired
 	private RoleService roleService;
-	private PermissionService permission;
+	@Autowired
+	private PermissionService permissionService;
 	
 	@RequestMapping("/toIndex")
 	public String toIndex() {
 		return "role/user";
 	}
+
+	@RequestMapping("/assignPermission")
+	public String assignPermission() {
+		return "role/assignPermission";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/doAssignPermission")
+	public Object doAssignPermission(Integer roleid, Data datas){
+		AjaxResult result = new AjaxResult();
+		try {
+			int count = roleService.saveRolePermissionRelationship(roleid,datas);
+			
+			result.setSuccess(count==datas.getIds().size());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.setSuccess(false);
+		}
+		
+		return result;
+	}
+	
 	@ResponseBody
 	@RequestMapping("/role")
 	 	//条件查询
@@ -76,22 +101,23 @@ public class RoleController {
 	@ResponseBody
 		
 	@RequestMapping("/loadDataAsync")
-	public Object loadDataAsync() {
-
-			 
-		
-	 
-			
+	public Object loadDataAsync(Integer roleid) {
+ 
 			List<Permission> root = new ArrayList<Permission>();
 
 			
-			List<Permission> childredPermissons =  permission.queryAllPermission();
+			List<Permission> childredPermissons =  permissionService.queryAllPermission();
 			
+			//根据roleid 查到已经分配的许可
+			List<Integer> permissionsForRoleid = permissionService.queryAllPermissionByRoleId(roleid);
 			
 			Map<Integer,Permission> map = new HashMap<Integer,Permission>();//100
 			
 			for (Permission innerpermission : childredPermissons) {
 				map.put(innerpermission.getId(), innerpermission);
+				if(permissionsForRoleid.contains(innerpermission.getId())){
+					innerpermission.setChecked(true);
+				}
 			}
 			
 			

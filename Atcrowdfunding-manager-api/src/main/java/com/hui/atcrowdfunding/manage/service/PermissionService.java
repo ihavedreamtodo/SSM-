@@ -10,4 +10,6 @@ public interface PermissionService {
 
 	int savePermission(Permission permission);
 
+	List<Integer> queryAllPermissionByRoleId(Integer roleid);
+
 }

@@ -1,7 +1,10 @@
 package com.hui.atcrowdfunding.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hui.atcrowdfunding.bean.Permission;
 import com.hui.atcrowdfunding.bean.User;
 import com.hui.atcrowdfunding.manage.service.UserService;
 import com.hui.atcrowdfunding.util.AjaxResult;
@@ -34,7 +38,10 @@ public class DispatcherController {
 	}
 	
 	@RequestMapping("/main")
-	public String main(){
+	public String main(HttpSession session){
+		
+	
+
 		return "main";
 	}
 	
@@ -60,15 +67,68 @@ public class DispatcherController {
 		
 		try {
 			Map<String, Object> paramMap = new HashMap<String, Object>();
+			
+			
+			
 			paramMap.put("loginacct", loginacct);
 			paramMap.put("userpswd", MD5Util.digest(userpswd));//将密码加密 MD5Util.digest(userpswd)
 			paramMap.put("type", type);
+			
+			
+			
+			if("member".equals(type)){//管理员
+			    User user = userService.queryUserLogin(paramMap);
+				
+				
+				 session.setAttribute(Const.LOGIN_USER, user);
+				// ==============================
+				//加载当前登录用户的所拥有的许可权限.
+					
+					//User user = (User)session.getAttribute(Const.LOGIN_USER);
+					//通过id找他的许可
+					List<Permission> myPermissions = userService.queryPermissionByUserid(user.getId());
+					
+					Permission permissionRoot = null;
+					                          
+					Map<Integer,Permission> map = new HashMap<Integer,Permission>();
+					
+					Set<String> allPermissionUrls = new HashSet<String>();//用于拦截器拦截许可权限
+
+				 
+					for (Permission innerpermission : myPermissions) {
+						map.put(innerpermission.getId(), innerpermission);
+						//把她的许可权限放进allPermissionUrls
+						allPermissionUrls.add("/"+innerpermission.getUrl());
+					}
+					//把她的许可权限放进session域中
+					session.setAttribute(Const.MY_URIS, allPermissionUrls);
+					for (Permission permission : myPermissions) {
+						//通过子查找父
+						//子菜单
+						Permission child = permission ; //假设为子菜单
+						if(child.getPid() == null ){
+							permissionRoot = permission;
+						}else{
+							//父节点
+							Permission parent = map.get(child.getPid());
+							parent.getChildren().add(child);
+						}
+					}
+					
+					
+					session.setAttribute("permissionRoot", permissionRoot);
+					 
+				 // ==============================
+				 result.setSuccess(true);
+			}else if("user".equals(type)){//普通会员
+				
+				//查询数据库比对数据是否一致，Service mapper都还没弄
+				//=======================================================
+				
+			}
+			
 							
-		    User user = userService.queryUserLogin(paramMap);
-				
-				
-			 session.setAttribute(Const.LOGIN_USER, user);
-			 result.setSuccess(true);
+		
 		//	 {success:true}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

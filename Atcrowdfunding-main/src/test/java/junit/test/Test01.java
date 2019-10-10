@@ -1,4 +1,4 @@
-package junit.test;
+/*package junit.test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,7 +21,7 @@ public class Test01 {
 		 for(int i = 1; i<= 100; i++) {
 			 User user = new User();
 			 user.setLoginacct("f那就好"+i);
-			 user.setUserpswd(MD5Util.digest("123"));
+			 user.setUserpswd(MD5Util.digest("123")); 
 			 user.setEmail("ddd@hui.com");
 			 user.setCreatetime("2017-01-15 10:41:00");
 			 user.setUsername("dfd"+i);
@@ -32,3 +32,4 @@ public class Test01 {
 	}
 
 }
+*/

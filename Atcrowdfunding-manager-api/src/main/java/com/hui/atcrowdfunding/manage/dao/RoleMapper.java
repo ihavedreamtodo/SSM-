@@ -2,6 +2,7 @@ package com.hui.atcrowdfunding.manage.dao;
 
 import com.hui.atcrowdfunding.bean.Role;
 import com.hui.atcrowdfunding.bean.RoleExample;
+import com.hui.atcrowdfunding.bean.Role_permission;
 import com.hui.atcrowdfunding.bean.User;
 
 import java.util.List;
@@ -101,4 +102,9 @@ public interface RoleMapper {
 	List<User> queryList(Map paramMap);
 
 	Integer queryCount();
+
+	void deleteRolePermissionRelationship(Integer roleid);
+
+	int insertRolePermission(Role_permission rp);
+ 
 }

@@ -289,4 +289,11 @@
     select id, pid, name, icon, url
 		from t_permission
   </select>
+  
+  
+  
+  <select id="queryAllPermissionByRoleId" parameterType="int" resultType="int">
+    select permissionid 
+		from t_role_permission where roleid =#{roleid}
+  </select>
 </mapper>
